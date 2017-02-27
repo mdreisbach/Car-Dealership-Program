@@ -1,0 +1,291 @@
+//Made by Kyle McHenry
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.FileReader;
+import java.util.Calendar;
+import java.util.List;
+		
+public class CarDealershipSystem 
+{
+
+	private static ArrayList<Car> cars = new ArrayList<Car>();
+	private static ArrayList<SalesAssociate> people = new ArrayList<SalesAssociate>();
+	private ArrayList<Transaction> trades = new ArrayList<Transaction>();
+	public static ArrayList<Car> soldCars = new ArrayList<Car>();
+	  
+	private static String make = "";
+	private static String model = "";
+	private static String color = "";
+	private static String vin = "";
+	private static int year = 0;
+	private static int miles = 0;
+	private static double price = 0.0;
+	private static Car car = new Car(make,model, year, miles, color, vin, price);
+	
+	private static String name = "";
+	private String address = "";
+	private static String password = "";
+	private String id = "";
+	private double totalSales = 0.0;
+	private SalesAssociate employee = new SalesAssociate(name, address, totalSales, id, password);
+	
+	private String cName = "", cAddress = "", cid = "";
+	private int accountNumber = 0;
+	String pNumber;
+	private Customer customer = new Customer(cName, cAddress, cid, accountNumber, pNumber);
+	
+	static String n;
+	static String ad;
+	static double sales;
+	static String AssociateId;
+	  
+
+	//Logging in for Sales Associate
+	public static boolean loggingIn(String u, String p)
+	{
+		String password = "";	
+
+		  ArrayList<SalesAssociate> loggingPerson = new ArrayList<SalesAssociate>();
+
+		  for(int z = 0; z < people.size(); z++)
+		  {
+		   people.get(z);
+		people.get(z);
+		if (SalesAssociate.getId().equals(u) && SalesAssociate.getPassword().equals(p))
+			{
+		    loggingPerson.add(z, people.get(z));
+			loggingPerson.get(z);
+			password = SalesAssociate.getPassword();
+			}
+		  }  
+
+	    if(u.equals(name) && p.equals(password))
+	    {
+	        System.out.println("You are logged in");
+	        return true;
+	    }
+	    else
+	    {
+	        System.out.println("You are logged in");
+	        return true;
+	    }
+	    }
+	
+	
+	//1st bullet point
+	 public static ArrayList<Car> FindCars(String make, String model)  {
+		 
+		  ArrayList<Car> foundCar = new ArrayList<Car>();
+		  foundCar.clear();
+		  for(int i = 0; i < cars.size(); i++){
+		   cars.get(i);
+		cars.get(i);
+		if (Car.getModel().equals(model) && Car.getMake().equals(make)){
+		    foundCar.add(i, cars.get(i));
+		   }
+		  }  
+		  return foundCar;
+		 }
+	 
+	//2nd bullet point
+	 public ArrayList<Car> carCollection() {
+	  String file = "cars.txt";
+	  Scanner reader = null;
+	     
+	  	try
+	     {
+	      reader = new Scanner(new FileReader(file));
+	         do
+	         {
+	          car.setVin(reader.next());
+	          car.setMake(reader.next());
+	          car.setModel(reader.next());
+	          car.setYear(reader.nextInt());
+	          car.setColor(reader.next());
+	          cars.add(car);
+	         } while (reader.hasNext());
+	         reader.close(); //closes the stream
+	     }
+	     catch(FileNotFoundException e)
+	     {
+	         System.out.println("Error opening file!");
+	         System.exit(0);
+	     }
+	     return cars;
+	 }
+
+	//3rd bullet point
+	public ArrayList<SalesAssociate> employeeCollection() {
+		String file = "employees.txt";
+		Scanner reader = null;
+		
+	     try
+	     {
+	      reader = new Scanner(new FileReader(file));
+	         do
+	         {
+	          employee.setName(reader.next());
+	          employee.setAddress(reader.next());
+	          employee.setPassword(reader.next());
+	          employee.setSalesAssociateID(reader.next());
+	          employee.setTotalSales(reader.nextDouble());
+	          people.add(employee);
+	         } while (reader.hasNext());
+	         reader.close(); //closes the stream
+	     }
+	     catch(FileNotFoundException e)
+	     {
+	         System.out.println("Error opening file!");
+	         System.exit(0);
+	     }
+	     return people;
+	 }
+	
+	//4th bullet point
+	public void transactionCollection( Car car, SalesAssociate employee, Customer person)
+	{
+			String date = "", time = "";
+			SimpleDateFormat mdyDate = new SimpleDateFormat("MM-dd-yyyy");
+			SimpleDateFormat hmTime = new SimpleDateFormat("hh:mm a");
+			Calendar c = Calendar.getInstance();
+			Transaction transaction = new Transaction(date, time, totalSales, person, car, employee);
+			time = hmTime.format(c.getTime());
+			date = mdyDate.format(c.getTime());
+			trades.add(transaction);
+	}
+	
+	//5th bullet point
+	public static void addNewTransactions(Transaction transaction)
+	{
+		Calendar c = Calendar.getInstance();
+		
+		try{
+			File file = new File("transactions.txt");
+			
+			if(!file.exists())
+				file.createNewFile();
+			
+			PrintWriter fileWriter = new PrintWriter(new FileOutputStream(file, true));
+			
+			String output = transaction.getDate() + "\"" + c.getTime().toString() + "\"" + transaction.getCustomer() + 
+			"\"" + transaction.getCar() + "\"" + transaction.getEmployee();
+
+			
+			fileWriter.write(output);
+
+			fileWriter.flush();
+			fileWriter.close();
+			
+		}catch(IOException e){}
+	}
+	
+	//6th bullet point
+	public void addCars(Car cars)
+	{
+		
+		try{
+			String file = "cars.txt";
+
+			PrintWriter fileWriter = new PrintWriter(new FileOutputStream(file, true));
+			
+			String output = Car.getMake() + "\"" + Car.getModel() + "\"" + Car.getYear() + 
+			"\"" + cars.getMiles() + "\"" + Car.getColor() + "\"" + Car.getVin();
+			
+			fileWriter.write(output);			
+			fileWriter.flush();
+			fileWriter.close();
+			
+		}catch(IOException e){}
+	}
+	
+	//7th bullet point
+	public void addSAssociates(SalesAssociate employee)
+	{
+		
+		try{
+			String file = "employees.txt";
+
+			PrintWriter fileWriter = new PrintWriter(new FileOutputStream(file, true));
+			
+			String output = employee.getName() + "\"" + employee.getAddress() + "\"" + SalesAssociate.gettotalSales() + 
+			"\"" + SalesAssociate.getId() + "\"" + SalesAssociate.getPassword();
+
+			fileWriter.write(output);	
+			
+			fileWriter.flush();
+			fileWriter.close();
+			
+		}catch(IOException e){}
+	}
+	
+	//TotalSales
+	public double TotalSales(Car c)
+	{
+		car = c;
+		double totalCost = 0;
+		
+		for (int i = 0; i < soldCars.size(); i++)
+		{
+		
+		totalCost += Car.getPrice();
+		}
+		return totalCost;
+	}
+	//Remove Cars
+	public static void removeCars(String rCar, String m, String mo)
+	{
+		    String vin, make, model;
+		    vin = rCar;
+		    make = m;
+		    model = mo;
+		    
+		    		
+		     for(int x = 0; x < cars.size(); x++)
+		     {
+		      cars.get(x);
+			cars.get(x);
+			cars.get(x);
+			if ((Car.getVin().equals(vin)) && (Car.getMake().equals(make)) && (Car.getModel().equals(model)))
+		      {
+		       cars.remove(x);
+		       
+		      }
+		     }
+	}
+	
+	public Car getCar()
+	{
+		return car;
+	}
+		 
+	public static void setCar(Car c)
+	{
+		  car = c;
+	}
+	public Customer getCustomer()
+	{
+		 return this.customer;
+	}
+		 
+	public void setCustomer(Customer customer)
+	{
+		this.customer = customer;
+	}
+
+	public static List<Car> getSoldCars() {
+		int x = 0;
+		soldCars.add(x, cars.get(x));
+		return soldCars;
+	}
+	
+}
+
+

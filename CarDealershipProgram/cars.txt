@@ -1,0 +1,2 @@
+4q3w2e1r,Dodge,Ram,Black,2005,22000.0
+1a2b3c4d,Ford,Mustang,red,2010,10000.0

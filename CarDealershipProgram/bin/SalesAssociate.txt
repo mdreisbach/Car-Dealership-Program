@@ -1,0 +1,76 @@
+//Made by Miles Dreisbach
+
+import java.util.Scanner;
+
+public class SalesAssociate 
+{
+	private String name;
+	private String address;
+	private static double totalSales;
+	private static String salesAssociateID;
+	private static String password;
+	Scanner input = new Scanner(System.in);
+	
+	//Constructor
+	public	SalesAssociate(String n, String ad, double sales, String id, String pword)
+	{
+		name = n;
+		address = ad;
+		totalSales = sales;
+		salesAssociateID = id;
+		password = pword;
+	}
+	
+	
+	
+	//Getters and Setters below
+		public String getName()
+		{
+			return name;
+		}
+		
+		public void setName(String name)
+		{
+			this.name = name;
+		}
+		
+			public String getAddress()
+		{
+			return address;
+		}
+		
+		public void setAddress(String address)
+		{
+			this.address = address;
+		}
+		
+		public static double gettotalSales()
+		{
+			return totalSales;
+		}
+		
+		public void setTotalSales(double sales)
+		{
+			totalSales += sales;
+		}
+		
+		public static String getId()
+		{
+			return salesAssociateID;
+		}
+		
+		public void setSalesAssociateID(String id)
+		{
+			salesAssociateID = id;
+		}
+		
+		public static String getPassword()
+		{
+			return password;
+		}
+		
+		public void setPassword(String pword)
+		{
+			password = pword;
+		}
+}
